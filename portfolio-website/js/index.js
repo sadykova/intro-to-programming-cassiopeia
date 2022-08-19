@@ -68,3 +68,45 @@ for (let i = 0; i < langskills.length; i++) {
   lskill.textContent = langskills[i];
   lskillsList.appendChild(lskill);
 }
+
+//Handle Message from Submit
+
+const messageForm = document.getElementsByName("leave_message");
+
+// function printUserMessage(event) {
+//   event.preventDefault();
+//   let userName = event.target.firstName.value; //how do I select first-name
+//   let userEmail = event.target.email.value;
+//   let userMessage = event.target.message.value;
+//   console.log(userName, userEmail, userMessage);
+//   messageForm.reset() how to reset a form inside the function?
+// }
+
+for (let i = 0; i < messageForm.length; i++) {
+  messageForm[0].addEventListener("submit", function (event) {
+    event.preventDefault();
+    let firstName = event.target.firstName.value;
+    let lastName = event.target.lastName.value;
+    let userEmail = event.target.email.value;
+    let userMessage = event.target.message.value;
+    console.log(firstName, lastName, userEmail, userMessage);
+    // Display Message List
+    const messageSection = document.getElementById("messages");
+
+    const messageList = messageSection.querySelector("ul");
+    const newMessage = document.createElement("li");
+    newMessage.innerHTML = `<a href='mailto:${userEmail}'>${firstName} ${lastName}</a> posted <span class='strong'>"${userMessage}"</span>`;
+
+    const removeButton = document.createElement("button");
+    removeButton.innerText = "remove";
+    removeButton.addEventListener("click", function (event) {
+      const entry = removeButton.parentNode;
+      // remove element
+      entry.remove();
+    });
+    newMessage.appendChild(removeButton);
+    messageList.appendChild(newMessage);
+
+    messageForm[i].reset();
+  });
+}
